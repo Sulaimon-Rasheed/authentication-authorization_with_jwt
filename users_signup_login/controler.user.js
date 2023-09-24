@@ -1,10 +1,10 @@
-const userModel = require("../models/user")
+const userModel = require ("../models/user")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
 const createUser = async (req, res)=>{
     const userInfo = req.body
-    const existingUser = await userModel.findOne({email:userInfo.email})
+    const existingUser = await userModel.findOne({where:{email:userInfo.email}})
     if(existingUser){
       return res.status(409).json({
             message:"user already exist"
@@ -33,14 +33,14 @@ const createUser = async (req, res)=>{
 
 const login = async (req,res)=>{
     const userLoginInfo = req.body
-    const existingUser = await userModel.findOne({email:userLoginInfo.email})
+    const existingUser = await userModel.findOne({where:{email:userLoginInfo.email}})
     if(!existingUser){
       return res.status(404).json({
             message:"you are not found",
         })
     }
 
-    const validPassword = await existingUser.isValidPassword(userLoginInfo.password)
+    const validPassword = await existingUser.validPassword(userLoginInfo.password)
     if(!validPassword){
       return  res.status(422).json({
             message:"email or password is incorrect",

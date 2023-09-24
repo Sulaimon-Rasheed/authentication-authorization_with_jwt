@@ -13,8 +13,8 @@ const validateUser = async (req, res, next)=>{
             city:joi.string().empty().required().messages({"string.base":`"city" must be of type "text"`,"string.empty":`"city" can not be empty`,"string.required":`"city" is required ` }),
             state:joi.string().empty().required().messages({"string.base":`"state" must be of type "text"`,"string.empty":`"state" can not be empty`,"string.required":`"state" is required ` }),
             country:joi.string().empty().required().messages({"string.base":`"country" must be of type "text"`,"string.empty":`"country" can not be empty`,"string.required":`"country" is required ` })
-            
-        })
+
+        }) 
 
         await userSchema.validateAsync(req.body, {abortEarly:true})
         next()

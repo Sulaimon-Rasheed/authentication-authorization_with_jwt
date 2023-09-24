@@ -1,21 +1,49 @@
-const mongoose = require ("mongoose")
+const {Sequelize, DataTypes} = require("sequelize")
+const sequelize = require("../config/sequelize")
+const { v4: uuidv4 } = require('uuid');
+const User = require("./user")
 
-const Schema = mongoose.Schema
+const Admin = sequelize.define("Admin", {
+          _id:{
+          type: DataTypes.UUID,
+          defaultValue:uuidv4(),
+          unique: true,
+          primaryKey: true
+        },
+        email:{
+          type:DataTypes.STRING,
+          allowNull: false,
+          unique:true
+        }, 
+        firstName:{
+          type:DataTypes.STRING,
+          allowNull: false,
+        }, 
+        lastName:{
+          type:DataTypes.STRING,
+          allowNull: false,
+        },
+        user_id: {
+          type: Sequelize.UUID,
+          references:{
+            model:"User",
+            key:"_id"
+          },
+        },
+        createdAt: {
+          type: DataTypes.DATE
+        },
+        updatedAt: {
+          type: DataTypes.DATE
+        }
+      },
+ {
+    timestamps:true,
+    sequelize,
+    modelName: 'Admin',
+ }
+ )
 
-const adminSchema = new Schema({
-    email:{
-        type:String,
-        required:true
-    },
-    firstName:{
-        type:String,
-        required:true
-    },
-    lastName:{
-        type:String,
-        required:true
-    },
-    userInfo:[{type:Schema.Types.ObjectId, ref:"users"}]
-})
+ Admin.belongsTo(User, { foreignKey: 'user_id' });
 
-module.exports = mongoose.model("admins", adminSchema)
+ module.exports = Admin

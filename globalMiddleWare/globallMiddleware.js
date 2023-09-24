@@ -21,7 +21,7 @@ const checkAdmin = async (req, res, next) => {
     });
     if (!admin) {
       return res.status(403).json({
-        message: "you are not authrized. Only an admin can make this request",
+        message: "you are not authorized. Only an admin can make this request",
       });
     }
 

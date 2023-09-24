@@ -7,7 +7,7 @@ const createProduct = async (req,res)=>{
 }
 
 const getAllProducts = async(req, res)=>{
-    const allProducts = await productModel.find()
+    const allProducts = await productModel.findAll()
     res.status(200).json(allProducts)
 }
 
