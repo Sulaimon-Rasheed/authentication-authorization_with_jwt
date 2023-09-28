@@ -16,9 +16,9 @@ const checkAdmin = async (req, res, next) => {
 
     const decoded = await jwt.verify(token, process.env.JWT_SECRET);
 
-    const admin = await adminModel.findOne({
+    const admin = await adminModel.findOne({where:{
       email: decoded.email,
-    });
+    }});
     if (!admin) {
       return res.status(403).json({
         message: "you are not authorized. Only an admin can make this request",

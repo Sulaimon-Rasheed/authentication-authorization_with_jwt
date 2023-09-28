@@ -26,7 +26,7 @@ const Admin = sequelize.define("Admin", {
         user_id: {
           type: Sequelize.UUID,
           references:{
-            model:"User",
+            model:"users",
             key:"_id"
           },
         },
